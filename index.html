@@ -1,1 +1,388 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Thumbnail Downloader - Download High-Quality Thumbnails from YouTube</title>
+    <meta name="description" content="Download high-quality YouTube video thumbnails instantly and for free. Get HD, 1080p, and 4K thumbnails from any YouTube video with Thumbrio.">
+    <meta name="keywords" content="youtube thumbnail downloader, thumbnail downloader, download youtube thumbnail, youtube thumbnail grabber, get youtube thumbnail, youtube image downloader, free thumbnail downloader, hd youtube thumbnail, 4k youtube thumbnail">
+    <meta name="author" content="Thumbrio">
+    <link rel="canonical" href="https://thumbrio-thumbnail.vercel.app/">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://thumbrio-thumbnail.vercel.app/">
+    <meta property="og:title" content="YouTube Thumbnail Downloader - Download High-Quality Thumbnails from YouTube">
+    <meta property="og:description" content="Download high-quality YouTube video thumbnails instantly and for free. Get HD, 1080p, and 4K thumbnails from any YouTube video with Thumbrio.">
+    <meta property="og:image" content="https://thumbrio-thumbnail.vercel.app/social-share-image.jpg"> <!-- Placeholder, replace with actual image URL -->
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://thumbrio-thumbnail.vercel.app/">
+    <meta property="twitter:title" content="YouTube Thumbnail Downloader - Download High-Quality Thumbnails from YouTube">
+    <meta property="twitter:description" content="Download high-quality YouTube video thumbnails instantly and for free. Get HD, 1080p, and 4K thumbnails from any YouTube video with Thumbrio.">
+    <meta property="twitter:image" content="https://thumbrio-thumbnail.vercel.app/social-share-image.jpg"> <!-- Placeholder, replace with actual image URL -->
+
+    <!-- Preload critical resources -->
+    <link rel="preload" href="style.css" as="style">
+    <link rel="preload" href="script.js" as="script">
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style" crossorigin="anonymous">
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" as="style" crossorigin="anonymous">
+
+    <!-- Google AdSense Script - Placed correctly in head -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2946379939892529"
+     crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Thumbrio - YouTube Thumbnail Downloader",
+      "url": "https://thumbrio-thumbnail.vercel.app/",
+      "description": "A free online tool to download high-quality YouTube video thumbnails in various resolutions (HD, 1080p, 4K).",
+      "applicationCategory": "MultimediaApplication",
+      "operatingSystem": "Any",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.9",
+        "reviewCount": "150"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Thumbrio"
+      }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How do I download a YouTube thumbnail using Thumbrio?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Simply copy the YouTube video URL, paste it into the input field on Thumbrio, click 'Extract', choose your desired quality, and then click 'Download Thumbnail'."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is Thumbrio free to use?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, Thumbrio is completely free to use for downloading YouTube video thumbnails."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What thumbnail qualities can I download?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Thumbrio allows you to download YouTube thumbnails in various qualities including Low, Normal, HD, 1080p, and even 4K and 8K resolutions when available."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is it legal to download YouTube thumbnails?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Downloading publicly available YouTube thumbnails for personal or educational use is generally considered legal. However, for commercial use or redistribution, it's advisable to obtain permission from the original creator to avoid copyright issues."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do I need to install any software to use Thumbrio?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No, Thumbrio is an online web application. You can use it directly from your browser without needing to install any software."
+          }
+        }
+      ]
+    }
+    </script>
+</head>
+
+<body>
+    <canvas id="rainCanvas" aria-hidden="true"></canvas>
+
+    <div class="container">
+        <header>
+            <div class="theme-toggle" id="themeToggle" role="button" aria-label="Toggle dark and light theme">
+                <i class="fas fa-sun" aria-hidden="true"></i>
+                <i class="fas fa-moon" aria-hidden="true"></i>
+            </div>
+            <div class="logo-section">
+                <div class="logo-icon" aria-hidden="true">
+                    <i class="fas fa-thumbs-up"></i>
+                </div>
+                <h1>THUMBRIO - YouTube Thumbnail Downloader</h1>
+                <p>Download <span class="highlight">high-quality thumbnails</span> from any YouTube video</p>
+            </div>
+        </header>
+
+        <!-- Ad Placement 1: Top Banner Ad (Below Header) -->
+        <div class="ad-container ad-top" role="complementary" aria-label="Advertisement">
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-2946379939892529"
+                 data-ad-slot="1234567890"
+                 data-ad-format="horizontal"
+                 data-full-width-responsive="true"></ins>
+            <script>
+                (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
+
+        <main>
+            <section class="how-to-use">
+                <div class="section-header">
+                    <h2>How to use Thumbrio:</h2>
+                    <i class="fas fa-chevron-up" aria-hidden="true"></i>
+                </div>
+                <ol>
+                    <li>Copy the YouTube video URL from your browser's address bar.</li>
+                    <li>Paste the URL in the input field below.</li>
+                    <li>Click the "Extract" button.</li>
+                    <li>Select your preferred quality and preview the image.</li>
+                    <li>Click "Download Thumbnail" to save it.</li>
+                </ol>
+            </section>
+
+            <section class="input-section" aria-labelledby="input-section-title">
+                <h2 id="input-section-title" class="sr-only">YouTube Video URL Input</h2>
+                <div class="input-group">
+                    <label for="videoUrl" class="sr-only">Paste YouTube Video URL here</label>
+                    <input type="text" id="videoUrl" placeholder="Paste YouTube Video URL here..." aria-label="YouTube Video URL input field">
+                    <button id="extractBtn" aria-label="Extract thumbnail from URL">Extract</button>
+                </div>
+            </section>
+
+            <section class="features" aria-labelledby="features-title">
+                <h2 id="features-title" class="sr-only">Key Features of Thumbrio</h2>
+                <div class="feature-card">
+                    <i class="fas fa-bolt" aria-hidden="true"></i>
+                    <h3>Fast Extraction</h3>
+                    <p>Get thumbnails in seconds with our optimized process.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-wand-magic-sparkles" aria-hidden="true"></i>
+                    <h3>AI Remarks</h3>
+                    <p>Our AI remarks on the best available thumbnail quality for you.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-layer-group" aria-hidden="true"></i>
+                    <h3>Multiple Qualities</h3>
+                    <p>Choose from 4 different resolutions for your needs.</p>
+                </div>
+            </section>
+
+            <div id="previewSection" class="preview-section hidden" aria-labelledby="preview-title">
+                <h2 id="preview-title">Thumbnail Preview</h2>
+                <div class="preview-container">
+                    <img id="thumbnailPreview" src="" alt="Preview of YouTube video thumbnail" aria-live="polite">
+                </div>
+                <div class="quality-selector" role="radiogroup" aria-label="Select thumbnail quality">
+                    <button class="quality-btn active" data-quality="low" aria-checked="true" role="radio">Low</button>
+                    <button class="quality-btn" data-quality="normal" aria-checked="false" role="radio">Normal</button>
+                    <button class="quality-btn" data-quality="4k" aria-checked="false" role="radio">4K</button>
+                    <button class="quality-btn" data-quality="8k" aria-checked="false" role="radio">8K</button>
+                </div>
+                <button id="downloadBtn" class="download-main-btn" aria-label="Download selected thumbnail">Download Thumbnail</button>
+            </div>
+
+            <!-- Ad Placement 2: Sidebar Ad (Between Features and Reviews) -->
+            <div class="ad-container ad-middle" role="complementary" aria-label="Advertisement">
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-client="ca-pub-2946379939892529"
+                     data-ad-slot="9876543210"
+                     data-ad-format="rectangle"
+                     data-full-width-responsive="true"></ins>
+                <script>
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+            </div>
+
+            <section class="reviews" aria-labelledby="reviews-title">
+                <h2 id="reviews-title">What Our Users Say About Thumbrio</h2>
+                <div class="review-card" role="article" aria-label="User review">
+                    <div class="review-header">
+                        <div class="user-info">
+                            <span class="username">VIRAAJ YADAV</span>
+                            <span class="badge admin-badge">Admin</span>
+                        </div>
+                        <div class="social-icons">
+                            <a href="https://www.instagram.com/viraaj.technode?igsh=bWplYXJzNm53cGsw" target="_blank" aria-label="VIRAAJ YADAV on Instagram"><i
+                                    class="fab fa-instagram" aria-hidden="true"></i></a>
+                            <a href="https://youtube.com/@eduspark-es?si=FhRYUISSP_ZHjnUm" target="_blank" aria-label="VIRAAJ YADAV on YouTube"><i
+                                    class="fab fa-youtube" aria-hidden="true"></i></a>
+                        </div>
+                    </div>
+                    <div class="stars" role="img" aria-label="5 out of 5 stars">★★★★★</div>
+                    <p>"The UI is clean and the quality is unmatched. Best tool for creators!"</p>
+                </div>
+
+                <div class="review-card" role="article" aria-label="User review">
+                    <div class="review-header">
+                        <div class="user-info">
+                            <span class="username">Dilip Chaudhary</span>
+                        </div>
+                        <div class="social-icons">
+                            <a href="https://www.instagram.com/sports.engi?igsh=dzZ1cmdzZ29vOWs2" target="_blank" aria-label="Dilip Chaudhary on Instagram"><i
+                                    class="fab fa-instagram" aria-hidden="true"></i></a>
+                            <a href="https://youtube.com/@sportsengineers?si=8sGuq1yD4kf0v55U" target="_blank" aria-label="Dilip Chaudhary on YouTube"><i
+                                    class="fab fa-youtube" aria-hidden="true"></i></a>
+                        </div>
+                    </div>
+                    <div class="stars" role="img" aria-label="5 out of 5 stars">★★★★★</div>
+                    <p>"This is the best thumbnail downloader app I've ever used!"</p>
+                </div>
+            </section>
+
+            <section class="faq-section" aria-labelledby="faq-title">
+                <h2 id="faq-title">Frequently Asked Questions (FAQ)</h2>
+                <div class="faq-item">
+                    <h3>How do I download a YouTube thumbnail using Thumbrio?</h3>
+                    <p>Simply copy the YouTube video URL, paste it into the input field on Thumbrio, click 'Extract', choose your desired quality, and then click 'Download Thumbnail'.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Is Thumbrio free to use?</h3>
+                    <p>Yes, Thumbrio is completely free to use for downloading YouTube video thumbnails.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>What thumbnail qualities can I download?</h3>
+                    <p>Thumbrio allows you to download YouTube thumbnails in various qualities including Low, Normal, HD, 1080p, and even 4K and 8K resolutions when available.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Is it legal to download YouTube thumbnails?</h3>
+                    <p>Downloading publicly available YouTube thumbnails for personal or educational use is generally considered legal. However, for commercial use or redistribution, it's advisable to obtain permission from the original creator to avoid copyright issues.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Do I need to install any software to use Thumbrio?</h3>
+                    <p>No, Thumbrio is an online web application. You can use it directly from your browser without needing to install any software.</p>
+                </div>
+            </section>
+
+            <section class="services" aria-labelledby="services-title">
+                <h2 id="services-title" class="sr-only">Our Services</h2>
+                <div class="service-group">
+                    <h3><i class="fas fa-video" aria-hidden="true"></i> YouTube Services</h3>
+                    <ul>
+                        <li>24/7 YouTube Live Song Streaming</li>
+                        <li>YouTube & Instagram Growth (Subscribers/Followers)</li>
+                        <li>Full YouTube Channel Monetization Assistance</li>
+                    </ul>
+                    <a href="https://t.me/Kplboy" class="service-btn telegram-btn" target="_blank" aria-label="Contact us on Telegram for YouTube Services">
+                        <i class="fab fa-telegram" aria-hidden="true"></i> Contact Us On Telegram
+                    </a>
+                </div>
+
+                <div class="service-group">
+                    <h3><i class="fas fa-laptop-code" aria-hidden="true"></i> Tech & Digital Services</h3>
+                    <ul>
+                        <li>RDP Services</li>
+                        <li>Telegram Bot Services</li>
+                        <li>Instagram Auto Reply DM & Followers</li>
+                        <li>YouTube Subscribers & 24x7 Live Song</li>
+                        <li>AWS Cloud Services</li>
+                    </ul>
+                    <a href="https://wa.me/918218829942" class="service-btn whatsapp-btn" target="_blank" aria-label="WhatsApp us for Tech & Digital Services">
+                        <i class="fab fa-whatsapp" aria-hidden="true"></i> WhatsApp Us
+                    </a>
+                </div>
+            </section>
+
+            <!-- Ad Placement 3: In-Article Ad (Before Owner Section) -->
+            <div class="ad-container ad-article" role="complementary" aria-label="Advertisement">
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-client="ca-pub-2946379939892529"
+                     data-ad-slot="5555555555"
+                     data-ad-format="horizontal"
+                     data-full-width-responsive="true"></ins>
+                <script>
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+            </div>
+
+            <section class="owner-section" aria-labelledby="owner-title">
+                <h2 id="owner-title" class="sr-only">About the Owner</h2>
+                <div class="owner-header">
+                    <h3>Owner</h3>
+                    <div class="owner-social-icons">
+                        <a href="https://wa.me/918218829942" target="_blank" aria-label="Contact owner on WhatsApp"><i class="fab fa-whatsapp" aria-hidden="true"></i></a>
+                        <a href="https://youtube.com/@9942live?si=Re2ifZWF359ah1pz" target="_blank" aria-label="Owner's YouTube channel"><i
+                                class="fab fa-youtube" aria-hidden="true"></i></a>
+                    </div>
+                </div>
+                <p>The purpose of creating this app is not to harm anyone's dignity. I have made this app only to help
+                    YouTube users.</p>
+                <div class="owner-name-right">— KPL Nishad</div>
+            </section>
+
+            <section class="contact-info-section" aria-labelledby="contact-title">
+                <h2 id="contact-title" class="section-title-green">Contact Information</h2>
+                <div class="contact-details">
+                    <p><strong>Owner:</strong> KPL Nishad</p>
+                    <p><strong>Email:</strong> <a href="mailto:kplnishad99@gmail.com" aria-label="Email KPL Nishad">kplnishad99@gmail.com</a></p>
+                    <p><strong>Admin:</strong> VIRAAJ YADAV</p>
+                    <p><strong>Phone:</strong> <a href="tel:+918218829942" aria-label="Call KPL Nishad">+918218829942</a></p>
+                </div>
+
+                <h3 class="section-title-green">Follow Us</h3>
+                <div class="follow-us-links">
+                    <a href="https://t.me/Kplboy" target="_blank" aria-label="Follow us on Telegram">
+                        <i class="fab fa-telegram" aria-hidden="true"></i> Telegram
+                    </a>
+                    <a href="https://www.instagram.com/kpl_study_3?igsh=MTgwbHEydTN2aTR4Yg=="" target="_blank" aria-label="Follow us on Instagram">
+                        <i class="fab fa-instagram" aria-hidden="true"></i> Instagram
+                    </a>
+                </div>
+            </section>
+
+            <!-- Ad Placement 4: Bottom Ad (Before Footer) -->
+            <div class="ad-container ad-bottom" role="complementary" aria-label="Advertisement">
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-client="ca-pub-2946379939892529"
+                     data-ad-slot="3333333333"
+                     data-ad-format="horizontal"
+                     data-full-width-responsive="true"></ins>
+                <script>
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+            </div>
+        </main>
+
+        <footer>
+            <p class="copyright">All images are property of their respective owners.</p>
+        </footer>
+    </div>
+
+    <!-- Success Popup -->
+    <div id="successPopup" class="popup hidden" role="dialog" aria-modal="true" aria-labelledby="popup-title">
+        <div class="popup-content">
+            <i class="fas fa-check-circle" aria-hidden="true"></i>
+            <h3 id="popup-title">Thanks for downloading!</h3>
+            <p>Your thumbnail has been saved successfully.</p>
+            <button id="closePopup" aria-label="Close download success pop-up">Close</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
